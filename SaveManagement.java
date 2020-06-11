@@ -1,5 +1,4 @@
 import Exceptions.FailedCheckException;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Класс, оперирующий с файлами
+ * РљР»Р°СЃСЃ, РѕРїРµСЂРёСЂСѓСЋС‰РёР№ СЃ С„Р°Р№Р»Р°РјРё
  */
 
 public class SaveManagement {
@@ -29,27 +28,28 @@ public class SaveManagement {
     }
 
     /**
-     * Сохранение файла в CSV формат
+     * РЎРѕС…СЂР°РЅРµРЅРёРµ С„Р°Р№Р»Р° РІ CSV С„РѕСЂРјР°С‚
      */
     public static void saveToFile(Collection c) {
-        if (file == null)
-        	 private static final DateFormat sdf = new SimpleDateFormat("_yyyy_MM_dd__HH_mm_ss");
-        	 private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("_yyyy_MM_dd__HH_mm_ss");
-        	 Date date = new Date();
-             file = new File("file"+sdf.format(date)+"file.csv");
+        if (file == null) {
+        	 //private static final DateFormat sdf = new SimpleDateFormat("_yyyy_MM_dd__HH_mm_ss");
+        	 //private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("_yyyy_MM_dd__HH_mm_ss");
+        	// Date date = new Date();
+           //  file = new File("file"+sdf.format(date)+"file.csv");
+        	file = new File("file_file.csv");}
         try (FileWriter fileWriter = new FileWriter(file)) {
             for (SpaceMarine r : c.list) {
                 fileWriter.write(r.toCSVfile() + "\n");
             }
         } catch (IOException e) {
-            System.out.println("Ошибка доступа к файлу");
+            System.out.println("РћС€РёР±РєР° РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ");
         }
     }
 
     /**
-     * Возвращает коллекцию из сохраненного файла
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»Р»РµРєС†РёСЋ РёР· СЃРѕС…СЂР°РЅРµРЅРЅРѕРіРѕ С„Р°Р№Р»Р°
      */
-    @NotNull
+    
     public static Collection listFromSave() {
         Collection collection = new Collection();
         try (Scanner scan = new Scanner(file)) {
@@ -59,33 +59,33 @@ public class SaveManagement {
                     String line = scan.nextLine();
                     args = line.split(",", 14);
 
-                    SpaceMarine route = new SpaceMarine();
-                    int id = SpaceMarine.idCheck.checker(Integer.parseInt(args[0]));
+                    SpaceMarine sm = new SpaceMarine();
+                    long id = SpaceMarine.idCheck.checker(Long.parseLong(args[0]));
                     if (collection.searchById(id) == null)
-                    	SpaceMarine.setId(id);
+                    	sm.setId(id);
                     else {
-                        System.out.println("Получен неверный id");
+                        System.out.println("РџРѕР»СѓС‡РµРЅ РЅРµРІРµСЂРЅС‹Р№ id");
                         throw new FailedCheckException();
                     }
 
-                    SpaceMarine.setName(SpaceMarine.nameCheck.checker(args[1]));
+                    sm.setName(SpaceMarine.nameCheck.checker(args[1]));
 
                     int cx = Coordinates.xCheck.checker(Integer.parseInt(args[2]));
-                    Long cy = Coordinates.yCheck.checker(Long.parseLong(args[3]));
-                    SpaceMarine.setCoordinates(new Coordinates(cx, cy));
+                    double cy = Coordinates.yCheck.checker(Double.parseDouble(args[3]));
+                   // sm.setCoordinates(new Coordinates(cx, cy));
 
                     LocalDate  dateTime = LocalDate.parse(args[4]);
-                    SpaceMarine.setCreationDate(dateTime);
+                    sm.setCreationDate(dateTime);
                  
-                    collection.list.add(route);
+                    collection.list.add(sm);
                 } catch (ArrayIndexOutOfBoundsException | DateTimeParseException | NumberFormatException | FailedCheckException e) {
-                    System.out.println("\u001B[31m" + "Ошибка чтения файла, строка: " + "\u001B[0m" + lineNum);
+                    System.out.println("\u001B[31m" + "РћС€РёР±РєР° С‡С‚РµРЅРёСЏ С„Р°Р№Р»Р°, СЃС‚СЂРѕРєР°: " + "\u001B[0m" + lineNum);
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("\u001B[31m" + "Ошибка доступа к файлу" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "РћС€РёР±РєР° РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ" + "\u001B[0m");
         }
-        Collections.sort(collection.list);
+       // Collections.sort(collection.list);
         return collection;
     }
 }

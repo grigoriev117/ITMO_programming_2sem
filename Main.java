@@ -7,9 +7,9 @@ public class Main {
         final long start = System.nanoTime();
         Signal.handle(new Signal("INT"), new SignalHandler() {
             public void handle(Signal sig) {
-                System.out.println("Программа завершает работу");
-                //if (Console.Console.HandlerB("Введите Bool: ", Command.boolCheck)) {
-                System.out.format("\nПрограмм работала %f сек.\n", (System.nanoTime() - start) / 1e9f);//ctrl-c
+                System.out.println("РџСЂРѕРіСЂР°РјРјР° Р·Р°РІРµСЂС€Р°РµС‚ СЂР°Р±РѕС‚Сѓ");
+                //if (Console.Console.HandlerB("Р’РІРµРґРёС‚Рµ Bool: ", Command.boolCheck)) {
+                System.out.format("\nРџСЂРѕРіСЂР°РјРј СЂР°Р±РѕС‚Р°Р»Р° %f СЃРµРє.\n", (System.nanoTime() - start) / 1e9f);//ctrl-c
                 System.exit(0);
                 //}
             }
@@ -21,13 +21,13 @@ public class Main {
             boolean programIsWorking = true;
             String[] com;
             while (programIsWorking) {
-                System.out.print("\u001B[33m" + "Ожидание ввода команды: " + "\u001B[0m");
+                System.out.print("\u001B[33m" + "РћР¶РёРґР°РЅРёРµ РІРІРѕРґР° РєРѕРјР°РЅРґС‹: " + "\u001B[0m");
                 com = CommandReader.splitter(Console.console.read());
                 programIsWorking = Command.switcher(Console.console, collection, com[0], com[1]);
                 //RecursionHandler.resetIfChanged();
             }
         } catch (EndOfFileException e) {
-            System.out.println("\u001B[31m" + "Неожиданное завершение работы консоли" + "\u001B[0m");//ctrl-d
+            System.out.println("\u001B[31m" + "РќРµРѕР¶РёРґР°РЅРЅРѕРµ Р·Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ РєРѕРЅСЃРѕР»Рё" + "\u001B[0m");//ctrl-d
         }
     }
 }

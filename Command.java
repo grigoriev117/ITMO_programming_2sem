@@ -1,18 +1,16 @@
-import java.util.LinkedList;
 import Exceptions.FailedCheckException;
-import org.jetbrains.annotations.NotNull;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
-import java.util.Collections;
 import Exceptions.EndOfFileException;
 import Exceptions.IncorrectFileNameException;
+import java.util.*;
 /**
- * Класс для обработки команд, вводимых в консоли
+ * РљР»Р°СЃСЃ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РєРѕРјР°РЅРґ, РІРІРѕРґРёРјС‹С… РІ РєРѕРЅСЃРѕР»Рё
  */
 
 public class Command {
     /**
-     * Обработка команд
+     * РћР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґ
      */
     public static boolean switcher(CommandReader reader, Collection c, String s1, String s2) throws EndOfFileException {
         switch (s1) {
@@ -63,120 +61,161 @@ public class Command {
             	filter_less_than_loyal(reader, c, s2);
                 break;
             default:
-                System.out.println("Такой команды не существует!\n Введите 'help', чтобы посмотреть список доступных команд.");
+                System.out.println("РўР°РєРѕР№ РєРѕРјР°РЅРґС‹ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!\n Р’РІРµРґРёС‚Рµ 'help', С‡С‚РѕР±С‹ РїРѕСЃРјРѕС‚СЂРµС‚СЊ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРѕРјР°РЅРґ.");
         }
         return true;
     }
     
     
-    public static Checker<Boolean> boolCheck = (Boolean B) -> {
-        if (B != null) return B;
-        else throw new FailedCheckException();
-    };
-}
-    
+
+
+public static Checker<Boolean> boolCheck = (Boolean B) -> {
+    if (B != null) return B;
+    else throw new FailedCheckException();
+};
     /**
-     * help : вывести справку по доступным командам
+     * help : РІС‹РІРµСЃС‚Рё СЃРїСЂР°РІРєСѓ РїРѕ РґРѕСЃС‚СѓРїРЅС‹Рј РєРѕРјР°РЅРґР°Рј
      */
     public static void help() {
         System.out.println(
-        				"help : вывести справку по доступным командам\n"
-    					"info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n"+
-    					"show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n"+
-    					"add {element} : добавить новый элемент в коллекцию\n"+
-    					"update id {element} : обновить значение элемента коллекции, id которого равен заданному\n"+
-    					"remove_by_id id : удалить элемент из коллекции по его id\n"+
-    					"clear : очистить коллекцию\n"+
-    					"save : сохранить коллекцию в файл\n"+
-    					"execute_script file_name : считать и исполнить скрипт из указанного файла.\n"+
-    					"В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.\n"+
-    					"exit : завершить программу (без сохранения в файл)\n"+
-    					"remove_first : удалить первый элемент из коллекции\n"+
-    					"head : вывести первый элемент коллекции\n"+
-    					"remove_head : вывести первый элемент коллекции и удалить его\n"+
-    					"remove_all_by_weapon_type weaponType : удалить из коллекции все элементы, значение поля weaponType которого эквивалентно заданному\n"+
-    					"group_counting_by_chapter : сгруппировать элементы коллекции по значению поля chapter, вывести количество элементов в каждой группе\n"+
-    					"filter_less_than_loyal loyal : вывести элементы, значение поля loyal которых меньше заданного\n"
+        				"help : РІС‹РІРµСЃС‚Рё СЃРїСЂР°РІРєСѓ РїРѕ РґРѕСЃС‚СѓРїРЅС‹Рј РєРѕРјР°РЅРґР°Рј\n"+
+    					"info : РІС‹РІРµСЃС‚Рё РІ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє РІС‹РІРѕРґР° РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕР»Р»РµРєС†РёРё (С‚РёРї, РґР°С‚Р° РёРЅРёС†РёР°Р»РёР·Р°С†РёРё, РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ Рё С‚.Рґ.)\n"+
+    					"show : РІС‹РІРµСЃС‚Рё РІ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє РІС‹РІРѕРґР° РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РєРѕР»Р»РµРєС†РёРё РІ СЃС‚СЂРѕРєРѕРІРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё\n"+
+    					"add {element} : РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РІ РєРѕР»Р»РµРєС†РёСЋ\n"+
+    					"update id {element} : РѕР±РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РєРѕР»Р»РµРєС†РёРё, id РєРѕС‚РѕСЂРѕРіРѕ СЂР°РІРµРЅ Р·Р°РґР°РЅРЅРѕРјСѓ\n"+
+    					"remove_by_id id : СѓРґР°Р»РёС‚СЊ СЌР»РµРјРµРЅС‚ РёР· РєРѕР»Р»РµРєС†РёРё РїРѕ РµРіРѕ id\n"+
+    					"clear : РѕС‡РёСЃС‚РёС‚СЊ РєРѕР»Р»РµРєС†РёСЋ\n"+
+    					"save : СЃРѕС…СЂР°РЅРёС‚СЊ РєРѕР»Р»РµРєС†РёСЋ РІ С„Р°Р№Р»\n"+
+    					"execute_script file_name : СЃС‡РёС‚Р°С‚СЊ Рё РёСЃРїРѕР»РЅРёС‚СЊ СЃРєСЂРёРїС‚ РёР· СѓРєР°Р·Р°РЅРЅРѕРіРѕ С„Р°Р№Р»Р°.\n"+
+    					"Р’ СЃРєСЂРёРїС‚Рµ СЃРѕРґРµСЂР¶Р°С‚СЃСЏ РєРѕРјР°РЅРґС‹ РІ С‚Р°РєРѕРј Р¶Рµ РІРёРґРµ, РІ РєРѕС‚РѕСЂРѕРј РёС… РІРІРѕРґРёС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІ РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕРј СЂРµР¶РёРјРµ.\n"+
+    					"exit : Р·Р°РІРµСЂС€РёС‚СЊ РїСЂРѕРіСЂР°РјРјСѓ (Р±РµР· СЃРѕС…СЂР°РЅРµРЅРёСЏ РІ С„Р°Р№Р»)\n"+
+    					"remove_first : СѓРґР°Р»РёС‚СЊ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РёР· РєРѕР»Р»РµРєС†РёРё\n"+
+    					"head : РІС‹РІРµСЃС‚Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё\n"+
+    					"remove_head : РІС‹РІРµСЃС‚Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё Рё СѓРґР°Р»РёС‚СЊ РµРіРѕ\n"+
+    					"remove_all_by_weapon_type weaponType : СѓРґР°Р»РёС‚СЊ РёР· РєРѕР»Р»РµРєС†РёРё РІСЃРµ СЌР»РµРјРµРЅС‚С‹, Р·РЅР°С‡РµРЅРёРµ РїРѕР»СЏ weaponType РєРѕС‚РѕСЂРѕРіРѕ СЌРєРІРёРІР°Р»РµРЅС‚РЅРѕ Р·Р°РґР°РЅРЅРѕРјСѓ\n"+
+    					"group_counting_by_chapter : СЃРіСЂСѓРїРїРёСЂРѕРІР°С‚СЊ СЌР»РµРјРµРЅС‚С‹ РєРѕР»Р»РµРєС†РёРё РїРѕ Р·РЅР°С‡РµРЅРёСЋ РїРѕР»СЏ chapter, РІС‹РІРµСЃС‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РєР°Р¶РґРѕР№ РіСЂСѓРїРїРµ\n"+
+    					"filter_less_than_loyal loyal : РІС‹РІРµСЃС‚Рё СЌР»РµРјРµРЅС‚С‹, Р·РЅР°С‡РµРЅРёРµ РїРѕР»СЏ loyal РєРѕС‚РѕСЂС‹С… РјРµРЅСЊС€Рµ Р·Р°РґР°РЅРЅРѕРіРѕ\n"
                 		
         );
     }
     
-    //remove_first : удалить первый элемент из коллекции
+    //remove_first : СѓРґР°Р»РёС‚СЊ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РёР· РєРѕР»Р»РµРєС†РёРё
     public static void removeFirst(Collection c) throws EndOfFileException {
         int size = c.list.size();
         int i = 0;
         if (i < size) {
                 c.list.remove(c.list.get(i));
             }
-        else catch (IncorrectFileNameException e) {
-            System.out.println("\u001B[31m" + "В коллекции нет элементов" + "\u001B[0m");
-        Collections.sort(c.list);
+        else  {
+            System.out.println("\u001B[31m" + "Р’ РєРѕР»Р»РµРєС†РёРё РЅРµС‚ СЌР»РµРјРµРЅС‚РѕРІ" + "\u001B[0m");}
     }
-      //  head : вывести первый элемент коллекции
+      //  head : РІС‹РІРµСЃС‚Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё
         public static void head(Collection c) throws EndOfFileException {
             int size = c.list.size();
             int i = 0;
             if (i < size) {
             	System.out.println(c.list.get(i).toString());
                 }
-            else catch (IncorrectFileNameException e) {
-                System.out.println("\u001B[31m" + "В коллекции нет элементов" + "\u001B[0m");
+            else {
+                System.out.println("\u001B[31m" + "Р’ РєРѕР»Р»РµРєС†РёРё РЅРµС‚ СЌР»РµРјРµРЅС‚РѕРІ" + "\u001B[0m");
         }
-    
-    //remove_head : вывести первый элемент коллекции и удалить его
+        }
+    //remove_head : РІС‹РІРµСЃС‚Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё Рё СѓРґР°Р»РёС‚СЊ РµРіРѕ
             public static void remove_head(Collection c) throws EndOfFileException {
                 int size = c.list.size();
                 int i = 0;
                 if (i < size) {
                 	System.out.println(c.list.get(i).toString());
                 	c.list.remove(c.list.get(i));
-                	Collections.sort(c.list);
+                	// Collections.sort(c.list);
                     }
-                else catch (IncorrectFileNameException e) {
-                    System.out.println("\u001B[31m" + "В коллекции нет элементов" + "\u001B[0m");
+                else {
+                    System.out.println("\u001B[31m" + "Р’ РєРѕР»Р»РµРєС†РёРё РЅРµС‚ СЌР»РµРјРµРЅС‚РѕРІ" + "\u001B[0m");
             }}
             //group_counting_by_chapter
             
-            public static void group_counting_by_chapter(Collection c) {
+                        public static void group_counting_by_chapter(Collection c) {
                 if (c.list.isEmpty()) {
-                    System.out.println("В коллекции нет элементов");
+                    System.out.println("Р’ РєРѕР»Р»РµРєС†РёРё РЅРµС‚ СЌР»РµРјРµРЅС‚РѕРІ");
                     return;
                 }
-                for (SpaceMarine r : c.list) {
-                    System.out.println(r.toString());
-                }
-            }
-                
+                else {
+                	LinkedList<String> lan = new LinkedList<>();
+                	//boolean contains(Object element);
+                	for (SpaceMarine sm : c.list) {
+                        if (!lan.contains(sm.getChapter().getParentLegion())) {
+                        	lan.add(sm.getChapter().getParentLegion());
+                        }
+                	}
+                	for (int j = 0; j < lan.size(); j++) {
+                		System.out.println("Р›РµРіРёРѕРЅ:");
+                		System.out.println(lan.get(j));
+                		int k = 0;
+                		for (SpaceMarine sm : c.list) {
+                			if (sm.getChapter().getParentLegion().equals(lan.get(j))) {
+                				System.out.println(sm.toString());
+                				k = k+1;
+                			}
+                		}
+                	 System.out.println("Р’СЃРµРіРѕ СЌР»РµРјРµРЅС‚РѕРІ: " + k);
+                	}
+
+               
+            }}            
                 /**
                  * remove_all_by_weapon_type
                  */
-                public static void remove_all_by_weapon_type(CommandReader reader, Collection c, String s) throws EndOfFileException {
-                    int id = c.getRandId();
-                    Collections.sort(c.list);
+                public static void remove_all_by_weapon_type(CommandReader reader, Collection c, String s) {
+		int size = c.list.size();
+        	int i = 0;
+		List<Integer> num = new ArrayList<Integer>();
+
+                   for (SpaceMarine sm : c.list) {
+                        if (sm.getWeaponType().toString().equals(s)) {
+				num.add(i);
+                        	 }
+			else {
+				i = i+1;
+			}}
+		for (int j = 0; j < num.size(); j++)
+		{
+		c.list.remove(c.list.get(num.get(j)));
+                  }
                 }
+
             
                 /**
                  * filter_less_than_loyal
                  */
                 public static void filter_less_than_loyal(CommandReader reader, Collection c, String s) throws EndOfFileException {
-                    int id = c.getRandId();
-                    Collections.sort(c.list);
+                    if (s == "0") System.out.println("РўР°РєРёС… СЌР»РµРјРµРЅС‚РѕРІ РЅРµС‚");
+                    else {
+                    	for (SpaceMarine sm : c.list) {
+                            if (sm.getLoyal() == false)
+                            	System.out.println(sm.toString());;
+                        }
+                    }
+                    // Collections.sort(c.list);
                 }
+                
+                
+               
+                
     /**
-     * Вывести в стандартный поток вывода информацию о коллекции
+     * Р’С‹РІРµСЃС‚Рё РІ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє РІС‹РІРѕРґР° РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕР»Р»РµРєС†РёРё
      */
     public static void info(Collection collection) {
-        System.out.println("Тип: " + collection.list.getClass().getName());
-        System.out.println("Колличество элементов: " + collection.list.size());
-        System.out.println("Дата инициализации: " + collection.getDate());
+        System.out.println("РўРёРї: " + collection.list.getClass().getName());
+        System.out.println("РљРѕР»Р»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ: " + collection.list.size());
+        System.out.println("Р”Р°С‚Р° РёРЅРёС†РёР°Р»РёР·Р°С†РёРё: " + collection.getDate());
     }
     
     /**
-     * Вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+     * Р’С‹РІРµСЃС‚Рё РІ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРѕС‚РѕРє РІС‹РІРѕРґР° РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РєРѕР»Р»РµРєС†РёРё РІ СЃС‚СЂРѕРєРѕРІРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё
      */
     public static void show(Collection c) {
         if (c.list.isEmpty()) {
-            System.out.println("В коллекции нет элементов");
+            System.out.println("Р’ РєРѕР»Р»РµРєС†РёРё РЅРµС‚ СЌР»РµРјРµРЅС‚РѕРІ");
             return;
         }
         for (SpaceMarine r : c.list) {
@@ -185,72 +224,72 @@ public class Command {
     }
     
     /**
-     * Добавить элемент в коллекцию
+     * Р”РѕР±Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ РІ РєРѕР»Р»РµРєС†РёСЋ
      */
     public static void add(CommandReader reader, Collection c, String s) throws EndOfFileException {
-        int id = c.getRandId();
+        Long id = c.getRandId();
         c.list.add(toAdd(reader, id, s));
-        Collections.sort(c.list);
+       
     }
     
     /**
-     * Обновить значение элемента коллекции, id которого равен заданному
+     * РћР±РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РєРѕР»Р»РµРєС†РёРё, id РєРѕС‚РѕСЂРѕРіРѕ СЂР°РІРµРЅ Р·Р°РґР°РЅРЅРѕРјСѓ
      */
-    public static void update(AbstractReader reader, Collection c, String s) throws EndOfFileException {
+    public static void update(CommandReader reader, Collection c, String s) throws EndOfFileException {
 
-        int id;
+        Long id;
         try {
-            id = SpaceMarine.idCheck.checker(Integer.parseInt(s));
+            id = SpaceMarine.idCheck.checker(Long.parseLong(s));
         } catch (NumberFormatException | FailedCheckException e) {
-            id = reader.handlerI("Введите id элемента: ", SpaceMarine.idCheck);
+            id = reader.handlerL("Р’РІРµРґРёС‚Рµ id СЌР»РµРјРµРЅС‚Р°: ", SpaceMarine.idCheck);
         }
         SpaceMarine r = c.searchById(id);
         if (r == null) {
-            System.out.println("Элемент не найден");
+            System.out.println("Р­Р»РµРјРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ");
             return;
         }
-        String name = reader.handlerS("Введите String: name", SpaceMarine.nameCheck);
+        String name = reader.handlerS("Р’РІРµРґРёС‚Рµ String: name", SpaceMarine.nameCheck);
         c.list.set(c.list.indexOf(r), toAdd(reader, id, name));
-        Collections.sort(c.list);
+        // Collections.sort(c.list);
     }
     
     /**
-     * Удалить элемент из коллекции по его id
+     * РЈРґР°Р»РёС‚СЊ СЌР»РµРјРµРЅС‚ РёР· РєРѕР»Р»РµРєС†РёРё РїРѕ РµРіРѕ id
      */
-    public static void removeById(AbstractReader reader, Collection c, String s) throws EndOfFileException {
-        int id;
+    public static void removeById(CommandReader reader, Collection c, String s) throws EndOfFileException {
+        Long id;
         try {
-            id = SpaceMarine.idCheck.checker(Integer.parseInt(s));
+            id = SpaceMarine.idCheck.checker(Long.parseLong(s));
         } catch (NumberFormatException | FailedCheckException e) {
-            id = reader.handlerI("Введите int id: ", SpaceMarine.idCheck);
+            id = reader.handlerL("Р’РІРµРґРёС‚Рµ int id: ", SpaceMarine.idCheck);
         }
         SpaceMarine r = c.searchById(id);
         if (r == null) {
-            System.out.println("\u001B[31m"+"Элемент не найден"+"\u001B[31m");
+            System.out.println("\u001B[31m"+"Р­Р»РµРјРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ"+"\u001B[31m");
             return;
         }
         c.list.remove(r);
-        Collections.sort(c.list);
+        // Collections.sort(c.list);
 
     }
     
     /**
-     * Сохраняет коллекцию в файл
+     * РЎРѕС…СЂР°РЅСЏРµС‚ РєРѕР»Р»РµРєС†РёСЋ РІ С„Р°Р№Р»
      */
     public static void save(Collection c) {
         SaveManagement.saveToFile(c);
     }
 
     /**
-     * Удаляет все элементы из коллекции
+     * РЈРґР°Р»СЏРµС‚ РІСЃРµ СЌР»РµРјРµРЅС‚С‹ РёР· РєРѕР»Р»РµРєС†РёРё
      */
-    public static void clear(@NotNull Collection c) {
+    public static void clear(Collection c) {
         c.list.clear();
     }
     
     /**
-     * Считывает и исполняет скрипт из указанного файла.
-     * В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме
+     * РЎС‡РёС‚С‹РІР°РµС‚ Рё РёСЃРїРѕР»РЅСЏРµС‚ СЃРєСЂРёРїС‚ РёР· СѓРєР°Р·Р°РЅРЅРѕРіРѕ С„Р°Р№Р»Р°.
+     * Р’ СЃРєСЂРёРїС‚Рµ СЃРѕРґРµСЂР¶Р°С‚СЃСЏ РєРѕРјР°РЅРґС‹ РІ С‚Р°РєРѕРј Р¶Рµ РІРёРґРµ, РІ РєРѕС‚РѕСЂРѕРј РёС… РІРІРѕРґРёС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІ РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕРј СЂРµР¶РёРјРµ
      */
     public static boolean executeScript(Collection c, String s) {
         boolean programIsWorking = true;
@@ -259,72 +298,87 @@ public class Command {
             if (RecursionHandler.isContains(s)) {
                 RecursionHandler.addToFiles(s);
                 String[] com;
-                System.out.print("\u001B[36m" + "Чтение команды в файле " + s + ": " + "\u001B[36m");
+                System.out.print("\u001B[36m" + "Р§С‚РµРЅРёРµ РєРѕРјР°РЅРґС‹ РІ С„Р°Р№Р»Рµ " + s + ": " + "\u001B[36m");
                 String line = reader.read();
                 while (line != null && programIsWorking) {
                     com = CommandReader.splitter(line);
                     programIsWorking = Command.switcher(reader, c, com[0], com[1]);
-                    System.out.print("\u001B[33m" + "Чтение команды в файле " + s + ": " + "\u001B[0m");
+                    System.out.print("\u001B[33m" + "Р§С‚РµРЅРёРµ РєРѕРјР°РЅРґС‹ РІ С„Р°Р№Р»Рµ " + s + ": " + "\u001B[0m");
                     line = reader.read();
                 }
                 RecursionHandler.removeLast();
             } else
-                System.out.println("\u001B[31m" + "Найдено повторение" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РќР°Р№РґРµРЅРѕ РїРѕРІС‚РѕСЂРµРЅРёРµ" + "\u001B[0m");
 
         } catch (IncorrectFileNameException e) {
-            System.out.println("\u001B[31m" + "Неверное имя файла" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "РќРµРІРµСЂРЅРѕРµ РёРјСЏ С„Р°Р№Р»Р°" + "\u001B[0m");
         } catch (EndOfFileException e) {
-            System.out.println("\u001B[31m" + "Неожиданный конец файла " + s + "\u001B[0m");
+            System.out.println("\u001B[31m" + "РќРµРѕР¶РёРґР°РЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р° " + s + "\u001B[0m");
             RecursionHandler.removeLast();
         } catch (FileNotFoundException e) {
-            System.out.println("\u001B[31m" + "Файл не найден" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ" + "\u001B[0m");
         }
         return programIsWorking;
     }
     
     
-    public static SpaceMarine toAdd(CommandReader reader, int id, String s) throws EndOfFileException {
+    public static SpaceMarine toAdd(CommandReader reader, Long id, String s) throws EndOfFileException {
 
         SpaceMarine sm = new SpaceMarine();
         sm.setId(id);
 
         try {
         	SpaceMarine.nameCheck.checker(s);
-            System.out.println("Поле name: " + s);
+            System.out.println("РџРѕР»Рµ name: " + s);
         } catch (FailedCheckException e) {
-            s = reader.handlerS("Введите String name, длиной больше 0: ", SpaceMarine.nameCheck);
+            s = reader.handlerS("Р’РІРµРґРёС‚Рµ String name, РґР»РёРЅРѕР№ Р±РѕР»СЊС€Рµ 0: ", SpaceMarine.nameCheck);
         }
         sm.setName(s);
 
-        System.out.println("Ввoд полей Coordinates");
-        int cx = reader.handlerI("Введите int x: ", Coordinates.xCheck);
-        Double cy = reader.handlerD("Введите Double y: ", Coordinates.yCheck);
+        System.out.println("Р’РІoРґ РїРѕР»РµР№ Coordinates:");
+        int cx = reader.handlerI("Р’РІРµРґРёС‚Рµ int x: ", Coordinates.xCheck);
+        Double cy = reader.handlerD("Р’РІРµРґРёС‚Рµ Double y: ", Coordinates.yCheck);
         sm.setCoordinates(new Coordinates(cx, cy));
 
         LocalDate creationTime = LocalDate.now();
         sm.setCreationDate(creationTime);
         
-        Double health = reader.handlerD("Введите Double health, больше 0:", SpaceMarine.healthCheck);
-        sm.setHealth();
+        Double health1 = reader.handlerD("Р’РІРµРґРёС‚Рµ Double health, Р±РѕР»СЊС€Рµ 0:", SpaceMarine.healthCheck);
+        sm.setHealth(health1);
 
-        boolean loyal = reader.handlerB("Введите boolean loyal", SpaceMarine.loyalCheck);
-        sm.setHealth();
+        boolean loyal1 = reader.handlerB("Р’РІРµРґРёС‚Рµ boolean loyal", boolCheck);
+        sm.setLoyal(loyal1);
         
-        String achievements = reader.handlerS("Введите String achievements", SpaceMarine.nameCheck);
+        String achievements = reader.handlerS("Р’РІРµРґРёС‚Рµ String achievements", SpaceMarine.nameCheck);
+        sm.setAchievements(achievements);
 
-        System.out.println("Ввoд полей Chapter");
-        String name1 = reader.handlerS("Введите String name: ", Chapter.cCheck);
-        String parentLegion1 = reader.handlerS("Введите String parentLegion: ", Chapter.cCheck);
-        sm.setChapter(new Chapter(name1, parenLegion1));
+        System.out.println("Р’РІoРґ РїРѕР»РµР№ Chapter");
+        String name1 = reader.handlerS("Р’РІРµРґРёС‚Рµ String name: ", Chapter.cCheck);
+        String parentLegion1 = reader.handlerS("Р’РІРµРґРёС‚Рµ String parentLegion: ", Chapter.cCheck);
+        sm.setChapter(new Chapter(name1, parentLegion1));
         
-        Weapon weaponType1 = reader.handlerS("Введите Weapon weaponType {\r\n" + 
+        String weaponType1 = reader.handlerS("Р’РІРµРґРёС‚Рµ Weapon weaponType {\r\n" + 
         		"    HEAVY_BOLTGUN,\r\n" + 
         		"    BOLT_RIFLE,\r\n" + 
         		"    PLASMA_GUN,\r\n" + 
         		"    COMBI_PLASMA_GUN,\r\n" + 
         		"    INFERNO_PISTOL;\r\n" + 
-        		"} ", SpaceMarine.WeaponCheck);
-        sm.setWeaponType(weaponType1);
+        		"} ", SpaceMarine.nameCheck);
+        
+        if (weaponType1.equals("HEAVY_BOLTGUN") || weaponType1.equals("BOLT_RIFLE") || weaponType1.equals("PLASMA_GUN") || weaponType1.equals("COMBI_PLASMA_GUN") || weaponType1.equals("INFERNO_PISTOL"))
+        {
+        	sm.setWeaponType(SpaceMarine.Weapon.valueOf(weaponType1));
+        }
+        else {
+        	System.out.println("Р’РІРµРґРёС‚Рµ РёР· РїСЂРµРґР»РѕР¶РµРЅРЅС‹С…");
+        	System.out.println("    HEAVY_BOLTGUN,\r\n" + 
+    		"    BOLT_RIFLE,\r\n" + 
+    		"    PLASMA_GUN,\r\n" + 
+    		"    COMBI_PLASMA_GUN,\r\n" + 
+    		"    INFERNO_PISTOL;\r\n"
+    		);
+        }
 
         return sm;
     }
+}

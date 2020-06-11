@@ -1,23 +1,24 @@
 import java.io.File;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Класс для хранения и обработки LinkedList
+ * РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Рё РѕР±СЂР°Р±РѕС‚РєРё LinkedList
  */
 public class Collection {
 
     /**
-     * Дата создания списка
+     * Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ СЃРїРёСЃРєР°
      */
     private Date date = new Date();
     /**
-     * Список, в котором хранятся элементы типа SpaceMarine
+     * РЎРїРёСЃРѕРє, РІ РєРѕС‚РѕСЂРѕРј С…СЂР°РЅСЏС‚СЃСЏ СЌР»РµРјРµРЅС‚С‹ С‚РёРїР° SpaceMarine
      */
     public LinkedList<SpaceMarine> list = new LinkedList<>();
 
     /**
-     * Метод, возвращающий список, удобный для сохранения в формат CSV
+     * РњРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ СЃРїРёСЃРѕРє, СѓРґРѕР±РЅС‹Р№ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РІ С„РѕСЂРјР°С‚ CSV
      */
     public static Collection startFromSave(String[] args) {
         if (args.length > 0) {
@@ -31,9 +32,9 @@ public class Collection {
     }
 
     /**
-     * Метод, осуществляющий поиск элемента по id
+     * РњРµС‚РѕРґ, РѕСЃСѓС‰РµСЃС‚РІР»СЏСЋС‰РёР№ РїРѕРёСЃРє СЌР»РµРјРµРЅС‚Р° РїРѕ id
      */
-    public SpaceMarine searchById(Integer id) {
+    public SpaceMarine searchById(Long id) {
         for (SpaceMarine r : list) {
             if (r.getId().equals(id))
                 return r;
@@ -46,12 +47,12 @@ public class Collection {
     }
 
     /**
-     * Метод, возвращающий уникальный id
+     * РњРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ СѓРЅРёРєР°Р»СЊРЅС‹Р№ id
      */
-    public int getRandId() {
-        int id;
+    public Long getRandId() {
+        Long id;
         do {
-            id = (int) (1 + Math.random() * (Integer.MAX_VALUE - 1));
+            id = (long) (1 + Math.random() * (Long.MAX_VALUE - 1));
         } while (this.searchById(id) != null);
         return id;
     }

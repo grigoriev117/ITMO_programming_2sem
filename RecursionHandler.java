@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 /**
- * Класс, предотвращающий рекурсии
+ * РљР»Р°СЃСЃ, РїСЂРµРґРѕС‚РІСЂР°С‰Р°СЋС‰РёР№ СЂРµРєСѓСЂСЃРёРё
  */
 public class RecursionHandler {
     private static Stack<String> usedFiles = new Stack<>();
@@ -20,3 +20,4 @@ public class RecursionHandler {
     public static boolean isContains(String s) {
         return usedFiles.search(s) == -1;
     }
+}

@@ -3,7 +3,7 @@ import Exceptions.EndOfFileException;
 import java.util.Scanner;
 
 /**
- * Класс, считывающий строки из консоли
+ * РљР»Р°СЃСЃ, СЃС‡РёС‚С‹РІР°СЋС‰РёР№ СЃС‚СЂРѕРєРё РёР· РєРѕРЅСЃРѕР»Рё
  */
 public class Console extends CommandReader {
     public static Console console = new Console();
@@ -20,6 +20,6 @@ public class Console extends CommandReader {
     public String read() throws EndOfFileException {
         if (scan.hasNextLine())
             return scan.nextLine();
-        throw new EndOfFileException("Конец ввода косоли!");
+        throw new EndOfFileException("РљРѕРЅРµС† РІРІРѕРґР° РєРѕСЃРѕР»Рё!");
     }
 }

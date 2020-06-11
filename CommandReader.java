@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 
 /**
- * Абстрактный класс, предназначенный для считаывания команд с консоли и считывания команд из файла
+ * РђР±СЃС‚СЂР°РєС‚РЅС‹Р№ РєР»Р°СЃСЃ, РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅС‹Р№ РґР»СЏ СЃС‡РёС‚Р°С‹РІР°РЅРёСЏ РєРѕРјР°РЅРґ СЃ РєРѕРЅСЃРѕР»Рё Рё СЃС‡РёС‚С‹РІР°РЅРёСЏ РєРѕРјР°РЅРґ РёР· С„Р°Р№Р»Р°
  */
 
 public abstract class CommandReader implements AutoCloseable {
@@ -12,12 +12,12 @@ public abstract class CommandReader implements AutoCloseable {
     }
 
     /**
-     * @return Возвращает последнюю строку
+     * @return Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅСЋСЋ СЃС‚СЂРѕРєСѓ
      */
     public abstract String read() throws EndOfFileException;
 
     /**
-     * Поле типа Scanner, предназначенное для считывания строки либо из файла, либо из консоли
+     * РџРѕР»Рµ С‚РёРїР° Scanner, РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅРѕРµ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ СЃС‚СЂРѕРєРё Р»РёР±Рѕ РёР· С„Р°Р№Р»Р°, Р»РёР±Рѕ РёР· РєРѕРЅСЃРѕР»Рё
      */
     protected Scanner scan;
 
@@ -35,7 +35,7 @@ public abstract class CommandReader implements AutoCloseable {
     }
 
     /**
-     * Метод для парсинга Integer
+     * РњРµС‚РѕРґ РґР»СЏ РїР°СЂСЃРёРЅРіР° Integer
      */
     public Integer handlerI(String s, Checker<Integer> c) throws EndOfFileException {
         String line;
@@ -45,20 +45,20 @@ public abstract class CommandReader implements AutoCloseable {
                 System.out.print(s);
                 line = this.read();
                 if (line == null)
-                    throw new EndOfFileException("Преждевременный конец файла!");
+                    throw new EndOfFileException("РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р°!");
                 else if (line.equals(""))
                     return c.checker(null);
                 return c.checker(Integer.parseInt(line));
             } catch (NumberFormatException e) {
-                System.out.println("\u001B[35m" + "Ошибка ввода, попробуйте еще раз" + "\u001B[35m");
+                System.out.println("\u001B[35m" + "РћС€РёР±РєР° РІРІРѕРґР°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[35m");
             } catch (FailedCheckException e) {
-                System.out.println("\u001B[35m" + "Условия не соблюдены, попробуйте еще раз" + "\u001B[35m");
+                System.out.println("\u001B[35m" + "РЈСЃР»РѕРІРёСЏ РЅРµ СЃРѕР±Р»СЋРґРµРЅС‹, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[35m");
             }
         }
     }
 
     /**
-     * Метод для парсинга Long
+     * РњРµС‚РѕРґ РґР»СЏ РїР°СЂСЃРёРЅРіР° Long
      */
     public Long handlerL(String s, Checker<Long> c) throws EndOfFileException {
         String line;
@@ -68,20 +68,20 @@ public abstract class CommandReader implements AutoCloseable {
                 System.out.print(s);
                 line = this.read();
                 if (line == null)
-                    throw new EndOfFileException("Преждевременный конец файла!");
+                    throw new EndOfFileException("РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р°!");
                 else if (line.equals(""))
                     return c.checker(null);
                 return c.checker(Long.parseLong(line));
             } catch (NumberFormatException e) {
-                System.out.println("\u001B[31m" + "Ошибка ввода, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РћС€РёР±РєР° РІРІРѕРґР°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             } catch (FailedCheckException e) {
-                System.out.println("\u001B[31m" + "Условия не соблюдены, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РЈСЃР»РѕРІРёСЏ РЅРµ СЃРѕР±Р»СЋРґРµРЅС‹, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             }
         }
     }
 
     /**
-     * Метод для парсинга Double
+     * РњРµС‚РѕРґ РґР»СЏ РїР°СЂСЃРёРЅРіР° Double
      */
     public Double handlerD(String s, Checker<Double> c) throws EndOfFileException {
         String line;
@@ -91,20 +91,20 @@ public abstract class CommandReader implements AutoCloseable {
                 System.out.print(s);
                 line = this.read();
                 if (line == null)
-                    throw new EndOfFileException("Преждевременный конец файла!");
+                    throw new EndOfFileException("РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р°!");
                 else if (line.equals(""))
                     return c.checker(null);
                 return c.checker(Double.parseDouble(line));
             } catch (NumberFormatException e) {
-                System.out.println("\u001B[31m" + "Ошибка ввода, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РћС€РёР±РєР° РІРІРѕРґР°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             } catch (FailedCheckException e) {
-                System.out.println("\u001B[31m" + "Условия не соблюдены, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РЈСЃР»РѕРІРёСЏ РЅРµ СЃРѕР±Р»СЋРґРµРЅС‹, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             }
         }
     }
 
     /**
-     * Метод для парсинга String
+     * РњРµС‚РѕРґ РґР»СЏ РїР°СЂСЃРёРЅРіР° String
      */
     public String handlerS(String s, Checker<String> c) throws EndOfFileException {
         String line;
@@ -113,18 +113,19 @@ public abstract class CommandReader implements AutoCloseable {
                 System.out.print(s);
                 line = this.read();
                 if (line == null)
-                    throw new EndOfFileException("Преждевременный конец файла!");
+                    throw new EndOfFileException("РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р°!");
                 else if (line.equals(""))
                     return c.checker(null);
                 return c.checker(line);
             } catch (FailedCheckException e) {
-                System.out.println("\u001B[31m" + "Условия не соблюдены, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РЈСЃР»РѕРІРёСЏ РЅРµ СЃРѕР±Р»СЋРґРµРЅС‹, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             }
         }
     }
-
+    
+    
     /**
-     * Метод для парсинга Boolean
+     * РњРµС‚РѕРґ РґР»СЏ РїР°СЂСЃРёРЅРіР° Boolean
      */
     public Boolean handlerB(String s, Checker<Boolean> c) throws EndOfFileException {
         String line;
@@ -134,14 +135,14 @@ public abstract class CommandReader implements AutoCloseable {
                 System.out.print(s);
                 line = this.read();
                 if (line == null)
-                    throw new EndOfFileException("Преждевременный конец файла!");
+                    throw new EndOfFileException("РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р°!");
                 else if (line.equals(""))
                     return c.checker(null);
                 return c.checker(parseBoolean(line));
             } catch (NumberFormatException e) {
-                System.out.println("\u001B[31m" + "Ошибка ввода, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РћС€РёР±РєР° РІРІРѕРґР°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             } catch (FailedCheckException e) {
-                System.out.println("\u001B[31m" + "Условия не соблюдены, попробуйте еще раз" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "РЈСЃР»РѕРІРёСЏ РЅРµ СЃРѕР±Р»СЋРґРµРЅС‹, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
             }
         }
     }
@@ -153,6 +154,26 @@ public abstract class CommandReader implements AutoCloseable {
             return false;
         throw new NumberFormatException();
     }
+
+    /**
+     * РњРµС‚РѕРґ РґР»СЏ РїР°СЂСЃРёРЅРіР° String
+     */
+    public String handlerE(String s, Checker<String> c) throws EndOfFileException {
+        String line;
+        while (true) {
+            try {
+                System.out.print(s);
+                line = this.read();
+                if (line == null)
+                    throw new EndOfFileException("РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅС‹Р№ РєРѕРЅРµС† С„Р°Р№Р»Р°!");
+                else if (line.equals(""))
+                    return c.checker(null);
+                return c.checker(line);
+            } catch (FailedCheckException e) {
+                System.out.println("\u001B[31m" + "РЈСЃР»РѕРІРёСЏ РЅРµ СЃРѕР±Р»СЋРґРµРЅС‹, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" + "\u001B[0m");
+            }
+        }
+    }
+    
+
 }
-
-

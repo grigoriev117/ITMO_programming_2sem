@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import Exceptions.FailedCheckException;
 
-public class SpaceMarine {
+public class SpaceMarine implements Comparable<Object>{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -11,6 +11,7 @@ public class SpaceMarine {
     private String achievements; //Поле не может быть null
     private Weapon weaponType; //Поле может быть null
     private Chapter chapter; //Поле не может быть null
+
 
 
 @Override
@@ -160,13 +161,18 @@ public static Checker<Double> healthCheck = (Double D) -> {
 /**
  * Сравнение объектов.
  */
-//@Override
-public int compareTo(SpaceMarine sm) {
-    int result = getName().compareTo(sm.getName());
 
-    if (result == 0 && getHealth() != null && sm.getHealth() != null) {
-        result = getHealth().compareTo(sm.getHealth());
+@Override
+public int compareTo(Object o) {
+        int result = this.getName().compareTo(((SpaceMarine) o).getName());
+
+        if (result == 0 && this.getHealth() != null && ((SpaceMarine) o).getHealth() != null) {
+            result = this.getHealth().compareTo(((SpaceMarine) o).getHealth());
+        }
+        return result;
     }
-    return result;
+
+
 }
-}
+
+

@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
  */
 public class Collection {
 
+	
+	
     /**
      * Дата создания списка
      */
@@ -19,8 +22,9 @@ public class Collection {
 
     /**
      * Метод, возвращающий список, удобный для сохранения в формат CSV
+     * @throws IOException 
      */
-    public static Collection startFromSave(String[] args) {
+    public static Collection startFromSave(String[] args) throws IOException {
         if (args.length > 0) {
             File saveFile = new File(args[0]);
             if (saveFile.exists()) {

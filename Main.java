@@ -1,9 +1,11 @@
+import java.io.IOException;
+
 import Exceptions.EndOfFileException;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NumberFormatException, IOException {
         final long start = System.nanoTime();
         Signal.handle(new Signal("INT"), new SignalHandler() {
             public void handle(Signal sig) {

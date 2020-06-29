@@ -1,7 +1,9 @@
 import Exceptions.FailedCheckException;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -48,44 +50,80 @@ public class SaveManagement {
 
     /**
      * Возвращает коллекцию из сохраненного файла
+     * @throws IOException 
      */
     
-    public static Collection listFromSave() {
+    public static Collection listFromSave() throws IOException {
         Collection collection = new Collection();
-        try (Scanner scan = new Scanner(file)) {
-            String[] args;
-            for (int lineNum = 1; scan.hasNext(); lineNum++) {
-                try {
-                    String line = scan.nextLine();
-                    args = line.split(",", 14);
-
-                    SpaceMarine sm = new SpaceMarine();
-                    long id = SpaceMarine.idCheck.checker(Long.parseLong(args[0]));
-                    if (collection.searchById(id) == null)
-                    	sm.setId(id);
-                    else {
-                        System.out.println("Получен неверный id");
-                        throw new FailedCheckException();
-                    }
-
-                    sm.setName(SpaceMarine.nameCheck.checker(args[1]));
-
-                    int cx = Coordinates.xCheck.checker(Integer.parseInt(args[2]));
-                    double cy = Coordinates.yCheck.checker(Double.parseDouble(args[3]));
-                   // sm.setCoordinates(new Coordinates(cx, cy));
-
-                    LocalDate  dateTime = LocalDate.parse(args[4]);
-                    sm.setCreationDate(dateTime);
-                 
-                    collection.list.add(sm);
-                } catch (ArrayIndexOutOfBoundsException | DateTimeParseException | NumberFormatException | FailedCheckException e) {
-                    System.out.println("\u001B[31m" + "Ошибка чтения файла, строка: " + "\u001B[0m" + lineNum);
+      try {  BufferedReader reader1 = new BufferedReader(new FileReader(file));
+      
+        // считываем построчно
+        String line = null;
+        Scanner scanner = null;
+        int index = 0;
+        int cx = 1;
+        Double cy = 1.0;
+        String n1 = null;
+        String n2 = null;
+ try {
+        while ((line = reader1.readLine()) != null) {
+        	SpaceMarine sm = new SpaceMarine();
+            scanner = new Scanner(line);
+            scanner.useDelimiter(",");
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                if (index == 0)
+                    sm.setId(Long.parseLong(data));
+                else if (index == 1)
+                    sm.setName(data);
+                else if (index == 2)
+                	cx = Integer.parseInt(data.replace("Coordinates{x=", ""));
+                else if (index == 3) {
+                	cy = Double.parseDouble(data.replace("y=", "").replace("}", ""));
+                    sm.setCoordinates(new Coordinates(cx, cy)); }
+                else if (index == 4) {
+                	String aa = data;
+                	LocalDate creationTime = LocalDate.now();
+                    sm.setCreationDate(creationTime);
                 }
+                else if (index == 5)
+                	sm.setHealth(Double.parseDouble(data));
+                else if (index == 6)
+                	sm.setLoyal(Boolean.parseBoolean(data));
+                else if (index == 7)
+                	sm.setAchievements(data);
+                else if (index == 8) {
+                	String weaponType1 = data;
+                	if (weaponType1.equals("HEAVY_BOLTGUN") || weaponType1.equals("BOLT_RIFLE") || weaponType1.equals("PLASMA_GUN") || weaponType1.equals("COMBI_PLASMA_GUN") || weaponType1.equals("INFERNO_PISTOL"))
+                    {
+                    	sm.setWeaponType(SpaceMarine.Weapon.valueOf(weaponType1));
+                    }
+                }
+                else if (index == 9)
+                	n1 = data.replace("Chapter{name=", "");
+                else if (index == 10) {
+                	n2 = data.replace("parentLegion=", "").replace("}", "");
+                	sm.setChapter(new Chapter(n1, n2));
+                }
+                else
+                    System.out.println("/");
+                index++;
+            
             }
+            index = 0;
+            collection.list.add(sm);
+        } } catch (ArrayIndexOutOfBoundsException | DateTimeParseException | NumberFormatException e) {
+            System.out.println("\u001B[31m" + "Ошибка чтения файла, строка: " + "\u001B[0m");}
         } catch (FileNotFoundException e) {
-            System.out.println("\u001B[31m" + "Ошибка доступа к файлу" + "\u001B[0m");
+            System.out.println("\u001B[31m" + "Ошибка доступа к файлу" + "\u001B[0m");}
+         
+        //закрываем наш ридер
+       // reader.close();
+        
+      return collection;
+        
         }
-       // Collections.sort(collection.list);
-        return collection;
     }
-}
+        
+        
+ 
